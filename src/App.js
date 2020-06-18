@@ -1,17 +1,26 @@
 import React from 'react';
+import marked from 'marked';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      previewContent: "Just a starting string!"
+      rawInput: "Write here",
+      markedContent: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
     this.setState({
-      previewContent: event.target.value
+      rawInput: event.target.value,
+      markedContent: marked(event.target.value)
+    });
+  }
+
+  componentDidMount() {
+    this.setState({
+      markedContent: marked(this.state.rawInput)
     });
   }
 
@@ -20,8 +29,15 @@ class App extends React.Component {
       <div className="container-fluid">
         <h1 className="text-center mb-5">Markdown previewer</h1>
         <div className="row">
-          <InputContainer header="Input window" handleChange={this.handleChange} previewContent={this.state.previewContent}/>
-          <PreviewContainer header="Preview window" previewContent={this.state.previewContent}/>
+          <InputContainer
+            header="Input window"
+            handleChange={this.handleChange}
+            rawInput={this.state.rawInput}
+          />
+          <PreviewContainer
+            header="Preview window"
+            markedContent={this.state.markedContent}
+          />
         </div>
       </div>
     );
@@ -34,19 +50,15 @@ function InputContainer(props) {
       <div className="card">
         <div className="card-header">{props.header}</div>
         <div className="card-body">
-          <p className="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-          </p>
           <form>
             <div className="form-group">
-              <label for="exampleFormControlTextarea1">Example textarea</label>
+              <label for="exampleFormControlTextarea1">Write your markdown here</label>
               <textarea
                 className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="15"
                 onChange={props.handleChange}
-                value={props.previewContent}
+                value={props.rawInput}
               ></textarea>
             </div>
           </form>
@@ -62,7 +74,7 @@ function PreviewContainer(props) {
       <div className="card">
         <div className="card-header">{props.header}</div>
         <div className="card-body">
-          <p className="card-text">{props.previewContent}</p>
+          <div dangerouslySetInnerHTML={{__html: props.markedContent}}/>
         </div>
       </div>
     </div>
