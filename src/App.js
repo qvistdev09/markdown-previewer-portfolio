@@ -26,7 +26,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="container-fluid p-4">
-        <h1 className="text-center mb-5">Markdown previewer</h1>
+        <h1 className="text-center display-6">
+          Markdown previewer
+          <small className="text-muted"> by Qvistsson</small>
+          </h1>
+        <hr />
         <div className="row">
           <InputContainer
             header="Input window"
