@@ -6,7 +6,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rawInput: 'Write here',
+      rawInput: defaultText,
       markedContent: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -53,12 +53,12 @@ function InputContainer(props) {
         <div className="card-body">
           <form>
             <div className="form-group">
-              <label for="exampleFormControlTextarea1">
+              <label for="editor">
                 Write your markdown here
               </label>
               <textarea
                 className="form-control"
-                id="exampleFormControlTextarea1"
+                id="editor"
                 rows="15"
                 onChange={props.handleChange}
                 value={props.rawInput}
@@ -77,11 +77,48 @@ function PreviewContainer(props) {
       <div className="card">
         <div className="card-header">{props.header}</div>
         <div className="card-body">
-          <div dangerouslySetInnerHTML={{ __html: props.markedContent }} />
+          <div id="preview" dangerouslySetInnerHTML={{ __html: props.markedContent }} />
         </div>
       </div>
     </div>
   );
 }
+
+const defaultText =
+`# This is a header
+## And this is a sub-header!
+
+You can also input [links](https://www.freecodecamp.com)
+
+As well as nifty code stuff, \`<div>like this!</div>\`, between 2 backticks.
+
+\`\`\`
+// this is multi-line code:
+
+function anotherExample(firstLine, lastLine) {
+  if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
+    return multiLineCode;
+  }
+}
+\`\`\`
+
+1. List items are a thing too!
+1. So go ahead and use those.
+1. You can start each one with a 1
+
+> We all love block quotes!
+> They make things look fancy.
+> So let's quote things. All the time. In blocks!
+
+Images can be embedded too:
+
+![React Logo w/ Text](https://goo.gl/Umyytc)
+
+You can also make text **bold**... whoa!
+Or _italic_.
+Or... wait for it... **_both!_**
+And feel free to go crazy ~~crossing stuff out~~.
+
+`
 
 export default App;
