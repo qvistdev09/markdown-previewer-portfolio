@@ -80,7 +80,7 @@ function PreviewContainer(props) {
   return (
     <div className="col-sm">
       <div className="card shadow-sm">
-        <div className="card-header bg-secondary text-white"><i className="fas fa-info-circle"></i>{" " + props.header}</div>
+        <div className="card-header bg-secondary text-white"><i className="fas fa-images"></i>{" " + props.header}</div>
         <div className="card-body">
           <div
             id="preview"
