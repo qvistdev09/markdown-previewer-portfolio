@@ -45,9 +45,9 @@ class App extends React.Component {
 
 function InputContainer(props) {
   return (
-    <div className="col-6">
+    <div className="col-sm">
       <div className="card shadow-sm">
-        <div className="card-header">{props.header}</div>
+        <div className="card-header bg-primary text-white"><i class="fas fa-info-circle"></i>{" " + props.header}</div>
         <div className="card-body">
           <form>
             <div className="form-group">
@@ -69,9 +69,9 @@ function InputContainer(props) {
 
 function PreviewContainer(props) {
   return (
-    <div className="col-6">
+    <div className="col-sm">
       <div className="card shadow-sm">
-        <div className="card-header">{props.header}</div>
+        <div className="card-header bg-secondary text-white"><i class="fas fa-info-circle"></i>{" " + props.header}</div>
         <div className="card-body">
           <div
             id="preview"
