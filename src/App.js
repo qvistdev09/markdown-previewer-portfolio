@@ -1,12 +1,13 @@
 import React from 'react';
 import marked from 'marked';
+import DOMPurify from 'dompurify';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rawInput: "Write here",
-      markedContent: ""
+      rawInput: 'Write here',
+      markedContent: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -14,13 +15,13 @@ class App extends React.Component {
   handleChange(event) {
     this.setState({
       rawInput: event.target.value,
-      markedContent: marked(event.target.value)
+      markedContent: DOMPurify.sanitize(marked(event.target.value, {gfm: true, breaks: true})),
     });
   }
 
   componentDidMount() {
     this.setState({
-      markedContent: marked(this.state.rawInput)
+      markedContent: marked(this.state.rawInput),
     });
   }
 
@@ -52,7 +53,9 @@ function InputContainer(props) {
         <div className="card-body">
           <form>
             <div className="form-group">
-              <label for="exampleFormControlTextarea1">Write your markdown here</label>
+              <label for="exampleFormControlTextarea1">
+                Write your markdown here
+              </label>
               <textarea
                 className="form-control"
                 id="exampleFormControlTextarea1"
@@ -74,7 +77,7 @@ function PreviewContainer(props) {
       <div className="card">
         <div className="card-header">{props.header}</div>
         <div className="card-body">
-          <div dangerouslySetInnerHTML={{__html: props.markedContent}}/>
+          <div dangerouslySetInnerHTML={{ __html: props.markedContent }} />
         </div>
       </div>
     </div>
