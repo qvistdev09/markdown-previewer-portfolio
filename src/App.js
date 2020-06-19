@@ -7,7 +7,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       rawInput: defaultText,
-      markedContent: '',
+      markedContent: DOMPurify.sanitize(
+        marked(defaultText, { gfm: true, breaks: true })
+      ),
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -15,19 +17,15 @@ class App extends React.Component {
   handleChange(event) {
     this.setState({
       rawInput: event.target.value,
-      markedContent: DOMPurify.sanitize(marked(event.target.value, {gfm: true, breaks: true})),
-    });
-  }
-
-  componentDidMount() {
-    this.setState({
-      markedContent: marked(this.state.rawInput),
+      markedContent: DOMPurify.sanitize(
+        marked(event.target.value, { gfm: true, breaks: true })
+      ),
     });
   }
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid p-4">
         <h1 className="text-center mb-5">Markdown previewer</h1>
         <div className="row">
           <InputContainer
@@ -48,14 +46,12 @@ class App extends React.Component {
 function InputContainer(props) {
   return (
     <div className="col-6">
-      <div className="card">
+      <div className="card shadow-sm">
         <div className="card-header">{props.header}</div>
         <div className="card-body">
           <form>
             <div className="form-group">
-              <label for="editor">
-                Write your markdown here
-              </label>
+              <label for="editor">Write your markdown here</label>
               <textarea
                 className="form-control"
                 id="editor"
@@ -74,18 +70,20 @@ function InputContainer(props) {
 function PreviewContainer(props) {
   return (
     <div className="col-6">
-      <div className="card">
+      <div className="card shadow-sm">
         <div className="card-header">{props.header}</div>
         <div className="card-body">
-          <div id="preview" dangerouslySetInnerHTML={{ __html: props.markedContent }} />
+          <div
+            id="preview"
+            dangerouslySetInnerHTML={{ __html: props.markedContent }}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-const defaultText =
-`# This is a header
+const defaultText = `# This is a header
 ## And this is a sub-header!
 
 You can also input [links](https://www.freecodecamp.com)
@@ -119,6 +117,6 @@ Or _italic_.
 Or... wait for it... **_both!_**
 And feel free to go crazy ~~crossing stuff out~~.
 
-`
+`;
 
 export default App;
