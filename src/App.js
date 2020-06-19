@@ -31,9 +31,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="container-fluid p-4">
-        <h1 className="text-center display-6">
+        <h1 className="text-center display-6 q-header">
           Markdown previewer
-          <small className="text-muted"> by Qvistsson</small>
+          <small className="text-muted"> by <a href="https://github.com/qvistsson" target="_blank" rel="noopener noreferrer">Qvistsson</a></small>
           </h1>
         <hr />
         <div className="row">
@@ -55,7 +55,7 @@ class App extends React.Component {
 function InputContainer(props) {
   return (
     <div className="col-sm">
-      <div className="card shadow-sm">
+      <div className="card shadow-sm mb-4">
         <div className="card-header bg-primary text-white"><i className="fas fa-info-circle"></i>{" " + props.header}</div>
         <div className="card-body">
           <form>

@@ -26,3 +26,7 @@ table, th, td {
 pre {
   background-color: #dddddd;
 }
+
+.q-header {
+  font-size: 1.5rem;
+}
