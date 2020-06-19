@@ -2,13 +2,18 @@ import React from 'react';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 
+const renderer = new marked.Renderer();
+renderer.image = function () {
+  return `<img alt="${arguments[2]}" src="${arguments[0]}" class="img-fluid" >`;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       rawInput: defaultText,
       markedContent: DOMPurify.sanitize(
-        marked(defaultText, { gfm: true, breaks: true })
+        marked(defaultText, { gfm: true, breaks: true, renderer: renderer})
       ),
     };
     this.handleChange = this.handleChange.bind(this);
@@ -18,7 +23,7 @@ class App extends React.Component {
     this.setState({
       rawInput: event.target.value,
       markedContent: DOMPurify.sanitize(
-        marked(event.target.value, { gfm: true, breaks: true })
+        marked(event.target.value, { gfm: true, breaks: true, renderer: renderer })
       ),
     });
   }
@@ -51,11 +56,11 @@ function InputContainer(props) {
   return (
     <div className="col-sm">
       <div className="card shadow-sm">
-        <div className="card-header bg-primary text-white"><i class="fas fa-info-circle"></i>{" " + props.header}</div>
+        <div className="card-header bg-primary text-white"><i className="fas fa-info-circle"></i>{" " + props.header}</div>
         <div className="card-body">
           <form>
             <div className="form-group">
-              <label for="editor">Write your markdown here</label>
+              <label htmlFor="editor">Write your markdown here</label>
               <textarea
                 className="form-control"
                 id="editor"
@@ -75,7 +80,7 @@ function PreviewContainer(props) {
   return (
     <div className="col-sm">
       <div className="card shadow-sm">
-        <div className="card-header bg-secondary text-white"><i class="fas fa-info-circle"></i>{" " + props.header}</div>
+        <div className="card-header bg-secondary text-white"><i className="fas fa-info-circle"></i>{" " + props.header}</div>
         <div className="card-body">
           <div
             id="preview"
